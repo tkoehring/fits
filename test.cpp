@@ -12,11 +12,32 @@ int main()
 	std::ifstream myFile("test.fits", std::ios::in | std::ios::binary);
 	std::vector<std::string> words;
 	std::vector<std::string>::iterator iter;
-	int dist, naxis, length, width;
+	int dist, naxis, length, width, i;
+	int s = 2880;
+	char *buffer = new char[s*3];
+	char *buf2 = new char[s*3];
 
-	getline(myFile, line);
+	//getline(myFile, line);
+	//word = "";
 
-	for(int i = 0; i < line.length(); i++)
+	myFile.read(buffer, s*3);
+
+	if(myFile)
+	{
+		std::cout << "Read all chars" << std::endl;
+	}
+	else
+	{
+		std::cout << "error onyl read " << myFile.gcount() << std::endl;
+	}
+	std::cout << "Data" << std::endl << buffer << std::endl;
+
+	myFile.read(buf2, s*3);
+	std::cout << "First data block" << std::endl << buf2 << std::endl;
+
+	/*
+	i = 0;
+	while(i < line.length() && word != "END")
 	{
 		if(!isspace(line[i]))
 		{
@@ -26,12 +47,15 @@ int main()
 		{
 			if(word != "")
 			{
+				std::cout << "Adding: " << word << std::endl;
 				words.push_back(word);
 			}
 			word = "";
 		}
+		i++;
 	}
-
+	words.push_back(word);
+	std::cout << "Added " << i << " chars" << std::endl;
 	iter = std::find(words.begin(), words.end(), "NAXIS");
 	dist = std::distance(words.begin(), iter);
 
@@ -57,5 +81,6 @@ int main()
 	}
 
 	std::cout << "NAXIS: " << naxis << std::endl << "NAXIS1: " << length << std::endl << "NAXIS2: " << width << std::endl;
+	std::cout << "Last Word: " << words.back() << std::endl;*/
 	return 0;
 }
